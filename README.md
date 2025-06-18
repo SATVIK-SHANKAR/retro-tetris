@@ -107,6 +107,27 @@ If you are on Linux or prefer to build yourself:
 
 ## 🛠 Development & Contribution
 
+### 🪟 Windows Support & Contribution
+
+Currently, Retro Tetris officially supports **macOS** and **Linux**.  
+Support for **Windows** is not yet available out-of-the-box due to differences in terminal handling and lack of native `ncurses` support.
+
+However, we welcome community contributions to make a Windows version possible!
+
+### 🧰 Potential Approaches:
+
+- Use **PDCurses**, a Windows-compatible alternative to `ncurses`
+- Implement a basic Windows terminal interface using the **Win32 Console API**
+- Use **WSL (Windows Subsystem for Linux)** to run the Linux version directly
+
+### 🙌 How You Can Help:
+
+- Fork the repo and try porting the code with `PDCurses` or another method
+- Submit a Pull Request (PR) with your working implementation or improvements
+- Open an Issue if you encounter platform-specific problems or want to collaborate
+
+Let's bring Tetris to more terminals together!
+
 - The project uses GitHub Actions to automate building and releasing binaries on each new tag.
 - Precompiled executables are automatically uploaded as release assets on GitHub.
 - The Homebrew Tap formula references these assets so users can install easily on macOS.
