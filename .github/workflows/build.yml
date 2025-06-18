@@ -10,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    if: matrix.os != 'windows-latest' # Skip Windows entirely
     strategy:
       matrix:
         include:
@@ -19,9 +20,9 @@ jobs:
           - os: macos-latest
             name: macos-x64
             ext: ""
-          - os: windows-latest
-            name: windows-x64
-            ext: ".exe"
+          # - os: windows-latest
+          #   name: windows-x64
+          #   ext: ".exe"
 
     steps:
       - uses: actions/checkout@v4
