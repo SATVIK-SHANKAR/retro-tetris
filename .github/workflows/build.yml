@@ -47,6 +47,8 @@ jobs:
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
             g++ -std=c++11 -O2 -static -o tetris${{ matrix.ext }} tetris.cpp -L. -lpdcurses
+          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
+            g++ -std=c++11 -O2 -o tetris${{ matrix.ext }} tetris.cpp -lncurses
           else
             g++ -std=c++11 -O2 -static -o tetris${{ matrix.ext }} tetris.cpp -lncurses
           fi
