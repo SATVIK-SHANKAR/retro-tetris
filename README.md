@@ -16,6 +16,12 @@ This project demonstrates a simple terminal-based Tetris game that can be built 
 
 ---
 
+## 🖼️ Gameplay Preview
+
+![Retro Tetris Screenshot](docs/tetris.png)
+
+---
+
 ## ⚙️ What Is CI/CD and Why Does It Matter?
 
 **CI/CD** is an automation practice used in software development that helps deliver updates faster and more reliably by automatically:
