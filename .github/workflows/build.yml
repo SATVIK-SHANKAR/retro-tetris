@@ -109,7 +109,7 @@ jobs:
         run: |
           git clone https://github.com/wmcbrine/PDCurses.git
           cd PDCurses
-          git checkout 60a0377  # ✅ specific commit with Makefile.gcc
+          git checkout 5c1cdb51df961e59b4dbd8aeaf57f9571b4f2c46  # ✅ Valid old commit with Makefile.gcc
           cd wincon
           make -f Makefile.gcc WIDE=Y UTF8=Y
           cp pdcurses.a ../../
