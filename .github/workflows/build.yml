@@ -108,7 +108,9 @@ jobs:
         shell: bash
         run: |
           git clone https://github.com/wmcbrine/PDCurses.git
-          cd PDCurses/wincon
+          cd PDCurses
+          git checkout 60a0377  # ✅ specific commit with Makefile.gcc
+          cd wincon
           make -f Makefile.gcc WIDE=Y UTF8=Y
           cp pdcurses.a ../../
           cd ../..
