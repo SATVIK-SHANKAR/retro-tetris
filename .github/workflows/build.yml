@@ -1,0 +1,64 @@
+# .github/workflows/build.yml
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: linux-x64
+            ext: ""
+          - os: macos-latest
+            name: macos-x64
+            ext: ""
+          - os: windows-latest
+            name: windows-x64
+            ext: ".exe"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y build-essential libncurses5-dev
+
+      - name: Install dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: brew install ncurses
+
+      - name: Install dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          git clone https://github.com/wmcbrine/PDCurses.git
+          cd PDCurses/wincon
+          make -f Makefile.gcc
+          cp pdcurses.a ../..
+          cd ../..
+
+      - name: Build
+        run: |
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            g++ -std=c++11 -O2 -static -o tetris${{ matrix.ext }} tetris.cpp -L. -lpdcurses
+          else
+            g++ -std=c++11 -O2 -static -o tetris${{ matrix.ext }} tetris.cpp -lncurses
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tetris-${{ matrix.name }}
+          path: tetris${{ matrix.ext }}
+
+      - name: Upload Release Asset
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: tetris${{ matrix.ext }}
