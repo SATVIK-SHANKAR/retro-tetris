@@ -113,16 +113,13 @@ jobs:
 
       - name: Build
         run: |
-          if [ "${{ matrix.os }}" = "macos-latest" ]; then
-            g++ -std=c++11 -O2 -o tetris${{ matrix.ext }} tetris.cpp \
-              -I/usr/local/opt/ncurses/include -L/usr/local/opt/ncurses/lib \
-              -I/opt/homebrew/opt/ncurses/include -L/opt/homebrew/opt/ncurses/lib \
-              -lncurses
-          elif [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-            g++ -std=c++11 -O2 -static -o tetris${{ matrix.ext }} tetris.cpp -lncurses
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            g++ -std=c++11 -O2 -static -o tetris${{ matrix.ext }} tetris.cpp -L. -lpdcurses
+          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
+            g++ -std=c++11 -O2 -o tetris${{ matrix.ext }} tetris.cpp -lncurses
           else
-            echo "Windows build disabled for now."
-            exit 1
+            # Linux
+            g++ -std=c++11 -O2 -static -o tetris${{ matrix.ext }} tetris.cpp -lncurses -ltinfo
           fi
 
       - name: Upload artifact
