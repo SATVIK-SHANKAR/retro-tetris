@@ -10,7 +10,6 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    if: matrix.os != 'windows-latest' # Skip Windows entirely
     strategy:
       matrix:
         include:
@@ -35,17 +34,17 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: brew install ncurses
 
-      - name: Install dependencies (Windows)
-        if: matrix.os == 'windows-latest'
-        shell: bash
-        run: |
-          git clone https://github.com/wmcbrine/PDCurses.git
-          cd PDCurses
-          git checkout 5c1cdb51df961e59b4dbd8aeaf57f9571b4f2c46  # Older commit with Makefile.gcc
-          cd wincon
-          make -f Makefile.gcc WIDE=Y UTF8=Y
-          cp pdcurses.a ../../
-          cd ../..
+      # - name: Install dependencies (Windows)
+      #   if: matrix.os == 'windows-latest'
+      #   shell: bash
+      #   run: |
+      #     git clone https://github.com/wmcbrine/PDCurses.git
+      #     cd PDCurses
+      #     git checkout 5c1cdb51df961e59b4dbd8aeaf57f9571b4f2c46  # Older commit with Makefile.gcc
+      #     cd wincon
+      #     make -f Makefile.gcc WIDE=Y UTF8=Y
+      #     cp pdcurses.a ../../
+      #     cd ../..
 
       - name: Build
         run: |
